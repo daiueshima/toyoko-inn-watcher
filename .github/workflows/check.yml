@@ -6,12 +6,14 @@ on:
     - cron: "0 * * * *"
 
 jobs:
-  hello:
+  check:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Say Hello
-        run: |
-          echo "Hello Toyoko!"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: python check_room.py
