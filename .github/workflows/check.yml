@@ -1,0 +1,17 @@
+name: Toyoko Checker
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 * * * *"
+
+jobs:
+  hello:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Say Hello
+        run: |
+          echo "Hello Toyoko!"
