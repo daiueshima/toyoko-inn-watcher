@@ -79,7 +79,7 @@ def main() -> None:
 
         browser.close()
 
-    if False:
+    if "空室なし" in hotel_section:
         print(f"結果: {HOTEL_NAME} は空室なしです")
         return
 
