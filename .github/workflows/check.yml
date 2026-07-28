@@ -10,10 +10,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: リポジトリを読み込む
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+      - name: Pythonを準備する
+        uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
-      - run: python check_room.py
+      - name: 必要なPythonライブラリを入れる
+        run: pip install -r requirements.txt
+
+      - name: Chromiumを入れる
+        run: playwright install chromium --with-deps
+
+      - name: 空室を確認する
+        env:
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          TO_EMAIL: ${{ secrets.TO_EMAIL }}
+        run: python check_room.py
