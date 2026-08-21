@@ -18,6 +18,14 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: 前回の空室状態を読み込む
+        uses: actions/cache/restore@v4
+        with:
+          path: room_state.json
+          key: toyoko-room-state-${{ github.run_id }}
+          restore-keys: |
+            toyoko-room-state-
+
       - name: 必要なPythonライブラリを入れる
         run: pip install -r requirements.txt
 
@@ -30,3 +38,10 @@ jobs:
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
           TO_EMAIL: ${{ secrets.TO_EMAIL }}
         run: python check_room.py
+
+      - name: 今回の空室状態を保存する
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: room_state.json
+          key: toyoko-room-state-${{ github.run_id }}
